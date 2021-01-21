@@ -14,7 +14,7 @@ RUN npm install && npm cache clean --force
 # Step 5: Copy in all the files from the current directory
 COPY . .
 # Step 6: Build application
-RUN npm build
+RUN npm run build
 # Step 7: Bring in the base image for NGINX (alpine)
 FROM nginx:1.19.6-alpine
 # (There will be no need to EXPOSE a port because this base image
@@ -27,7 +27,7 @@ WORKDIR /usr/share/nginx/html
 #   The build directory was created inside the app directory in the 
 #   build-stage. The files inside that folder can be put directly into
 #   the html folder that you just set as your working directory
-COPY --from=build-stage /app .
+COPY --from=build-stage /app/build .
 # Step 10: Replace the default NGINX config with the application's version
 #    The absolute path to the default NGINX config file is 
 #    /etc/nginx/conf.d/default.conf —replace it with the nginx.conf file
